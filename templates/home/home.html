@@ -1,0 +1,119 @@
+{% extends 'home/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<!-- Page Heading -->
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+</div>
+<!-- Content Row -->
+<div class="row">
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+              Positive</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> 50%</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-smile-beam fa-2x text-green-300" style="color:green"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+              Neutral</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">25%</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-meh fa-2x text-grey-300" style="color:grey"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-danger shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+              Negative</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">25%</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-angry fa-2x text-red-300" style="color:red"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content Row -->
+
+<hr class="sidebar-divider d-none d-md-block">
+<div class="row">
+  <div class="col-xl-4 col-lg-4 text-center">
+    <h5>Positive Word</h5>
+    <img src="/static/img/WRDCLD_Positive.png" class="img-fluid rounded" alt="Positive Word">
+  </div>
+  <div class="col-xl-4 col-lg-4 text-center">
+    <h5>Neutral Word</h5>
+    <img src="/static/img/WRDCLD_Neutral.png" class="img-fluid rounded" alt="Neutral Word">
+  </div>
+  <div class="col-xl-4 col-lg-4 text-center">
+    <h5>Negative Word</h5>
+    <img src="/static/img/WRDCLD_Negative.png" class="img-fluid rounded" alt="Negative Word">
+  </div>
+</div>
+
+<hr class="sidebar-divider d-none d-md-block">
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Data CSV</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Tweet</th>
+                <th>Sentiment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in data%}
+              <tr>
+                <td>{{ row.tweet }}</td>
+                {% if row.label=='1' %}
+                <td>Positive</td>
+                {% elif row.label=='2' %}
+                <td>Negative</td>
+                {% elif row.label=='0' %}
+                <td>Neutral</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

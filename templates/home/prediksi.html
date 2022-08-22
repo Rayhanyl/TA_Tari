@@ -1,0 +1,52 @@
+{% extends 'home/layout.html' %} {% block title %} {{ title }} {% endblock %} {%block content %}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Sentiment Analisis</h1>
+<!-- <p class="mb-4">Masukan Text yang akan di analisis</p> -->
+<form method="POST" action="{{url_for('prediksi')}}">
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Masukan Text yang akan di
+            analisis :</label>
+        <textarea class="form-control" id="text-area" name="a" rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary btn-lg btn-block mt-2" id="clicked" type="submit" value="Submit">Input
+        data</button>
+</form>
+</p>
+<hr class="sidebar-divider d-none d-md-block">
+<!-- DataTales Example -->
+<div class="card shadow mb-4 mt-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Hasil Sentiment</h6>
+    </div>
+    <div class="card-body">
+        {% if data==1 %}
+        <div class="alert alert-success text-center" role="alert">
+            <strong> <i class="fas fa-smile-beam fa-2x text-green-300" style="color:green"></i>
+                <h3>Positive</h3>
+            </strong>
+            <h6>"{{tweet}}"</h6>
+        </div>
+        <!--  -->
+        {% elif data==2 %}
+        <div class="alert alert-danger text-center" role="alert">
+            <strong> <i class="fas fa-angry fa-2x text-red-300" style="color:red"></i>
+                <h3>Negative</h3>
+            </strong>
+            <h6>"{{tweet}}"</h6>
+        </div>
+        {% elif data==0 %}
+                <div class="alert alert-warning text-center" role="alert">
+            <strong> <i class="fas fa-meh fa-2x text-yellow-300" style="color:yellow""></i>
+                <h3>Neutral</h3>
+            </strong>
+            <h6>"{{tweet}}"</h6>
+        </div>
+        {% else %}
+        <div class="alert alert-info" role="alert">
+            <strong>sentiment analisis</strong>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
