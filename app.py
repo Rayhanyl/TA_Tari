@@ -1,7 +1,7 @@
 from genericpath import exists
 from flask import Flask, render_template, request, redirect, url_for, session,flash
 from flask_mysqldb import MySQL
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import MySQLdb.cursors
 import re
 import numpy as np
@@ -140,9 +140,9 @@ def prediksi():
                 text = request.form['a']
                 print(text)
                 # LOAD Model dan Vectorize
-                pickle_in = open("svm_model", "rb")
+                pickle_in = open("svm_model_new", "rb")
                 model = pickle.load(pickle_in)
-                vectorize = pickle.load(open("vectorize", "rb"))
+                vectorize = pickle.load(open("vectorizetf", "rb"))
                 print(vectorize)
                 #
                 testing_tweet = {"text":[text]}
@@ -185,9 +185,9 @@ def upload():
             df = pd.read_csv('static/uploads/databaru.csv', sep=',')
 
             #Load Model dan Vectorize
-            pickle_in = open("svm_model", "rb")
+            pickle_in = open("svm_model_new", "rb")
             model = pickle.load(pickle_in)
-            vectorize = pickle.load(open("vectorize", "rb"))
+            vectorize = pickle.load(open("vectorizetf", "rb"))
 
             data_predict = list(df['Tweet'].values)
             input_text = (data_predict)

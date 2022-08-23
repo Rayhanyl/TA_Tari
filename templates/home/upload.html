@@ -1,6 +1,6 @@
 {% extends 'home/layout.html' %} {% block title %} {{ title }} {% endblock %} {%block content %}
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Input Form</h1>
+<h1 class="h3 mb-2 text-gray-800">Form input data</h1>
 <form method="POST" , action="{{url_for('upload')}}" enctype="multipart/form-data">
   <div class="custom-file">
     <input type="file" id="file" name="file" />
@@ -90,7 +90,7 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>Date</th>
+                <th>Date/No</th>
                 <th>Username</th>
                 <th>Tweet</th>
                 <th>Sentiment</th>

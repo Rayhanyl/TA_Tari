@@ -10860,21 +10860,21 @@ a:focus {
   }
 }
 
-.bg-login-image {
+.bg-login-gambar {
   /* background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800"); */
-  background: url("../img/login.png");
+  background: url("4.png");
   background-position: center;
   background-size: cover;
 }
 
-.bg-register-image {
-  background: url("../img/login.png");
+.bg-register-gambar {
+  background: url("4.png");
   background-position: center;
   background-size: cover;
 }
 
 .bg-password-image {
-  background: url("../img/login.png");
+  background: url("4.png");
   background-position: center;
   background-size: cover;
 }
