@@ -10,6 +10,22 @@
 <!-- Content Row -->
 <div class="row">
   <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+              Semuadata</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{total_data}} </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-smile-beam fa-2x text-blue-300" style="color:rgb(24, 8, 239)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="col-xl-3 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
@@ -17,7 +33,7 @@
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
               Positive</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800"> 50% </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{positif}}%</div>
           </div>
           <div class="col-auto">
             <i class="fas fa-smile-beam fa-2x text-green-300" style="color:green"></i>
@@ -34,10 +50,10 @@
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
               Neutral</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">25%</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{netral}}%</div>
           </div>
           <div class="col-auto">
-            <i class="fas fa-meh fa-2x text-grey-300" style="color:grey"></i>
+            <i class="fas fa-meh fa-2x text-grey-300" style="color:rgb(243, 184, 7)"></i>
           </div>
         </div>
       </div>
@@ -50,7 +66,7 @@
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
               Negative</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">25%</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{negatif}}%</div>
           </div>
           <div class="col-auto">
             <i class="fas fa-angry fa-2x text-red-300" style="color:red"></i>
@@ -62,39 +78,43 @@
 </div>
 <!-- Content Row -->
 <hr class="sidebar-divider d-none d-md-block">
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Data CSV</h6>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Username</th>
-            <th>Tweet</th>
-            <th>Sentiment</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for value in data%}
-          <tr>
-            <td>{{ value[0] }}</td>
-            <td>{{ value[1] }}</td>
-            <td>{{ value[2] }}</td>
-            {% if value[3]== 1 %}
-            <td>Positive</td>
-            {% elif value[3]== -1 %}
-            <td>Negative</td>
-            {% elif value[3]== 0 %}
-            <td>Neutral</td>
-            {% endif %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+<div class="row">
+  <div class="col-xl-12 mb-4">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Data CSV</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Username</th>
+                <th>Tweet</th>
+                <th>Sentiment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for value in data%}
+              <tr>
+                <td>{{ value[0] }}</td>
+                <td>{{ value[1] }}</td>
+                <td>{{ value[2] }}</td>
+                {% if value[3]== 1 %}
+                <td>Positive</td>
+                {% elif value[3]== -1 %}
+                <td>Negative</td>
+                {% elif value[3]== 0 %}
+                <td>Neutral</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

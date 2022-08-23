@@ -139,10 +139,12 @@ def prediksi():
             if request.method == 'POST':
                 text = request.form['a']
                 print(text)
+                # LOAD Model dan Vectorize
                 pickle_in = open("svm_model", "rb")
                 model = pickle.load(pickle_in)
                 vectorize = pickle.load(open("vectorize", "rb"))
                 print(vectorize)
+                #
                 testing_tweet = {"text":[text]}
                 new_def_test = pd.DataFrame(testing_tweet)
                 new_x_test = new_def_test["text"]
@@ -194,7 +196,22 @@ def upload():
             df2 = df.assign(prediksi = prediction)
             data = list(df2.values)
             print(data)
-            return render_template('home/upload.html', data=data, title="Upload")
+
+            netral = 0
+            positif = 0
+            negatif = 0
+            for i in data:
+                if i[3] == 1:
+                    positif+=1
+                elif i[3] == -1:
+                    negatif+=1
+                elif i[3] == 0:
+                    netral+=1
+            total_data = len(data)
+            netral = round(netral/total_data*100,2)
+            negatif = round(negatif/total_data*100,2)
+            positif = round(positif/total_data*100,2)       
+            return render_template('home/upload.html', data=data, total_data=total_data, netral=netral, negatif=negatif, positif=positif,title="Upload")
         # User is loggedin show them the home page
         return render_template('home/upload.html', title="Upload")
     # User is not loggedin redirect to login page

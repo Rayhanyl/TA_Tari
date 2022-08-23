@@ -9,6 +9,20 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 </div>
+
+
+<div class="row">
+    <div class="col-md-12">
+      <h1>Tugas akhir</h1>
+      <h5>Analisis Sentiment</h5>
+      <ul>
+        <li>Andi Nur Utari Aminuddin</li>
+        <li>1184039</li>
+        <li>D4 Teknik Informatika</li>
+      </ul>
+    </div>
+</div>
+<hr class="sidebar-divider d-none d-md-block">
 <h3 class="text-center">Wordlcloud</h3>
 <hr class="sidebar-divider d-none d-md-block">
 <div class="row">
@@ -31,7 +45,7 @@
   <div class="col-xl-12">
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data CSV</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Teks Sentiment yang telah di prediksi</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -48,7 +62,7 @@
                 <td>{{ row.tweet }}</td>
                 {% if row.label=='1' %}
                 <td>Positive</td>
-                {% elif row.label=='2' %}
+                {% elif row.label=='-1' %}
                 <td>Negative</td>
                 {% elif row.label=='0' %}
                 <td>Neutral</td>
