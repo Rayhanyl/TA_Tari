@@ -1,3 +1,4 @@
+from genericpath import exists
 from flask import Flask, render_template, request, redirect, url_for, session,flash
 from flask_mysqldb import MySQL
 from sklearn.feature_extraction.text import CountVectorizer
@@ -24,19 +25,20 @@ app.config['MYSQL_DB'] = 'sentiment_TA'
 
 UPLOAD_FOLDER = 'static/uploads/'
 ALLOWED_EXTENSIONS = {'csv'}
+
 # define template (html file) location
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# ## TEXT PROCESSING
-df = pd.read_csv('static/data_train_nb_full.csv')
+# # TEXT PROCESSING
+# df = pd.read_csv('static/data_train_nb_full.csv')
 
 # load model
-model = pickle.load(open('static/model_izza_new.pkl','rb'))
+# model = pickle.load(open('static/model.pkl','rb'))
 
 # vectorize the 'text' data
-vectorizer = CountVectorizer(min_df=2, ngram_range=(1,4))
-fit_vec = vectorizer.fit(df['Tweet'])
+# vectorizer = CountVectorizer(min_df=2, ngram_range=(1,4))
+# fit_vec = vectorizer.fit(df['Tweet'])
 
 # class
 sentiment_dict = {1:'Positive',0:'Neutral',2:'Negative'}
@@ -132,20 +134,37 @@ def home():
 def prediksi():
     # Check if user is loggedin
     if 'loggedin' in session:
-        if request.method == 'POST' and 'a' in request.form:
-            # get input text
-            input_text = np.array([request.form['a']])
-            print(input_text)
-            # encode text
-            encode_text = fit_vec.transform(input_text)
-            # prediction
-            prediction = model.predict(encode_text)
-            tweet = request.form['a']
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('INSERT INTO prediksi VALUES (%s, %s, %s)', (cursor.lastrowid, tweet, prediction[0]))
-            mysql.connection.commit()
-            # User is loggedin show them the home page
-            return render_template('home/prediksi.html', data=prediction[0], tweet=tweet, title="Prediksi")
+        msg = None
+        if(request.method == "POST"):
+            if request.method == 'POST':
+                text = request.form['a']
+                print(text)
+                pickle_in = open("svm_model", "rb")
+                model = pickle.load(pickle_in)
+                vectorize = pickle.load(open("vectorize", "rb"))
+                print(vectorize)
+                testing_tweet = {"text":[text]}
+                new_def_test = pd.DataFrame(testing_tweet)
+                new_x_test = new_def_test["text"]
+                print(new_x_test)
+                new_xv_test = vectorize.transform([text])
+                print(new_xv_test)
+                preds = model.predict(new_xv_test)
+                if preds[0] == 1:
+                    result = "Positive"
+                elif preds[0] == -1:
+                    result = "Negative"
+                elif preds[0] == 0:
+                    result = "Neutral"    
+                print(preds)
+                #Save to database
+                save_text = request.form['a']
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('INSERT INTO prediksi VALUES (%s, %s, %s)', (cursor.lastrowid, save_text, preds[0]))
+                mysql.connection.commit()
+            return render_template("home/prediksi.html", data = result, tweet=text)
+        else:
+            msg = "Username is not available"
         return render_template('home/prediksi.html', title="Prediksi")
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))  
@@ -162,28 +181,24 @@ def upload():
             f.filename = "databaru.csv"
             f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
             df = pd.read_csv('static/uploads/databaru.csv', sep=',')
-            
+
+            #Load Model dan Vectorize
+            pickle_in = open("svm_model", "rb")
+            model = pickle.load(pickle_in)
+            vectorize = pickle.load(open("vectorize", "rb"))
+
             data_predict = list(df['Tweet'].values)
-            input_text = np.array(data_predict)
-            encode_text = fit_vec.transform(input_text)
-            # prediction
+            input_text = (data_predict)
+            encode_text = vectorize.transform(input_text)
             prediction = model.predict(encode_text)
             df2 = df.assign(prediksi = prediction)
             data = list(df2.values)
+            print(data)
             return render_template('home/upload.html', data=data, title="Upload")
         # User is loggedin show them the home page
         return render_template('home/upload.html', title="Upload")
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
-
-@app.route('/profile')
-def profile():
-    # Check if user is loggedin
-    if 'loggedin' in session:
-        # User is loggedin show them the home page
-        return render_template('auth/profile.html', data=session,title="Profile")
-    # User is not loggedin redirect to login page
-    return redirect(url_for('login'))  
 
 @app.route('/logout')
 def logout():

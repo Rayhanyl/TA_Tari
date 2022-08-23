@@ -20,7 +20,7 @@
         <h6 class="m-0 font-weight-bold text-primary">Hasil Sentiment</h6>
     </div>
     <div class="card-body">
-        {% if data==1 %}
+        {% if data== 'Positive' %}
         <div class="alert alert-success text-center" role="alert">
             <strong> <i class="fas fa-smile-beam fa-2x text-green-300" style="color:green"></i>
                 <h3>Positive</h3>
@@ -28,14 +28,14 @@
             <h6>"{{tweet}}"</h6>
         </div>
         <!--  -->
-        {% elif data==2 %}
+        {% elif data== 'Negative' %}
         <div class="alert alert-danger text-center" role="alert">
             <strong> <i class="fas fa-angry fa-2x text-red-300" style="color:red"></i>
                 <h3>Negative</h3>
             </strong>
             <h6>"{{tweet}}"</h6>
         </div>
-        {% elif data==0 %}
+        {% elif data== 'Neutral' %}
                 <div class="alert alert-warning text-center" role="alert">
             <strong> <i class="fas fa-meh fa-2x text-yellow-300" style="color:yellow""></i>
                 <h3>Neutral</h3>
